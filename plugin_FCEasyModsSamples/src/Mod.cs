@@ -28,6 +28,7 @@ namespace nialscorva.FCEasyModsSamples {
         {
             return modLoader.CreateSegmentEntity(parameters);
         }
+
         public override ModItemActionResults PerformItemAction(ModItemActionParameters parameters)
         {
             ModItemActionResults miar = new ModItemActionResults();

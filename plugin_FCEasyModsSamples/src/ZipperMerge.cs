@@ -47,11 +47,6 @@ namespace nialscorva.FCEasyMods.Samples
             
         }
 
-        protected void AnimateCarriedItem(float completion)
-        {
-            this.mCarriedObjectParent.transform.localPosition = new Vector3(0f, 0.10025f, completion);
-            this.mCarriedObjectParent.transform.forward = this.Forward;
-        }
 
         protected StateCoroutine DefaultVisualState()
         {
@@ -95,6 +90,7 @@ namespace nialscorva.FCEasyMods.Samples
             yield return NextState(CarryState(AcceptLeftState()));
         }
 
+
         protected StateCoroutine CarryState(StateCoroutine followupState)
         {
             float carryTimer = 0f;
@@ -103,7 +99,6 @@ namespace nialscorva.FCEasyMods.Samples
             while (carryTimer < totalCarryTime)
             {
                 carryTimer += LowFrequencyThread.mrPreviousUpdateTimeStep;
-                AnimateCarriedItem(carryTimer / totalCarryTime);
                 yield return 0;
             }
             // TODO: end the conveyor animation
@@ -122,6 +117,5 @@ namespace nialscorva.FCEasyMods.Samples
 
             yield return NextState(followupState);
         }
-
     }
 }
