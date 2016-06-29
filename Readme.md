@@ -36,7 +36,7 @@ Input and output ports allow fine control of items with the machine behaviors an
 ## Example: Zipper Merge
 Ideally, a Zipper Merge could be implemented like this:
 
-```
+```csharp
    [FCESegmentEntity("FCEasyModsSamples.zipperMerge1")]
     [FCETerrainData(
         Name="Sample Zipper Merge",
