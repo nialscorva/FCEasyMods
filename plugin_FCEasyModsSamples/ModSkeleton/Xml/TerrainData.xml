@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ArrayOfTerrainDataEntry xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+	<TerrainDataEntry>
+		<Key>FCEasyModsSamples.zipperMerge</Key>
+		<Name>Sample Zipper Merge</Name>
+		<LayerType>PrimaryTerrain</LayerType>
+		<TopTexture>192</TopTexture>
+		<SideTexture>192</SideTexture>
+		<BottomTexture>192</BottomTexture>
+		<GUITexture>192</GUITexture>
+		<isSolid>false</isSolid>
+		<isTransparent>false</isTransparent>
+		<isHollow>false</isHollow>
+		<isGlass>false</isGlass>
+		<isPassable>false</isPassable>
+		<hasObject>true</hasObject>
+		<hasEntity>true</hasEntity>
+		<AudioWalkType>Metal</AudioWalkType>
+		<AudioBuildType>Metal</AudioBuildType>
+		<AudioDestroyType>None</AudioDestroyType>
+		<Category>Machine</Category>
+		<MaxStack>100</MaxStack>
+		<tags>
+			<tag>Machinery</tag>
+		</tags>
+		<Values>
+			<ValueEntry>
+				<Key>FCEasyModsSamples.zipperMerge1</Key>
+				<Name>Sample Zipper Merge</Name>
+				<IconName>Zipper Merge</IconName>
+				<Description>Replicates Zipper Merge Functionality</Description>
+			</ValueEntry>
+		</Values>
+	</TerrainDataEntry>
+</ArrayOfTerrainDataEntry>

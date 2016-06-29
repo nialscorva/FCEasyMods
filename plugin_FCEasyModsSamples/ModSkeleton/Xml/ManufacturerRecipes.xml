@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ArrayOfCraftData xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+<CraftData>
+	<Key>FCEasyModsSamples.zipperMerge.recipe1</Key>
+	<Category>logistics</Category>
+	<Tier>1</Tier>
+	<CraftedKey>FCEasyModsSamples.zipperMerge1</CraftedKey>
+	<CraftedAmount>1</CraftedAmount>
+	<CraftedTime>15</CraftedTime>
+	<Costs>
+		<CraftCost>
+			<Key>Snow</Key>
+			<Amount>1</Amount>
+		</CraftCost>
+	</Costs>
+	<Description>Same as normal ZipperMerge, just from a mod!</Description>
+</CraftData>
+</ArrayOfCraftData>
