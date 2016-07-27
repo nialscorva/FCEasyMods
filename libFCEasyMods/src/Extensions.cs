@@ -17,4 +17,11 @@ public static class Extensions {
         }
         return null;
     }
+
+    public static GameObject GetDescendantGameObject(this GameObject target, string name)
+    {
+        return target?.transform?.Search(name)?.gameObject;
+    }
+
+
 }

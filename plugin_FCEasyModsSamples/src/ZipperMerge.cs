@@ -9,7 +9,7 @@ using StateCoroutine = System.Collections.Generic.IEnumerable<nialsorva.FCEEasyM
 
 namespace nialscorva.FCEasyMods.Samples
 {
-    [FCESegmentEntity("FCEasyModsSamples.zipperMerge1")]
+    /*  [FCESegmentEntity("FCEasyModsSamples.zipperMerge1")]
     [FCETerrainData(
         Name="Sample Zipper Merge",
 		IconName="Zipper Merge",
@@ -117,5 +117,5 @@ namespace nialscorva.FCEasyMods.Samples
 
             yield return NextState(followupState);
         }
-    }
+    }*/
 }

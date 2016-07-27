@@ -31,14 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp-fcebeta">
-      <HintPath>Assembly-CSharp-fcebeta.dll</HintPath>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\FortressCraft\64\FC_64_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
-    </Reference>
-    <Reference Include="FCECommunityTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>FCECommunityTools.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="NetLegacySupport.Tuple, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NetLegacySupport.Tuple.1.1.0\lib\net35\NetLegacySupport.Tuple.dll</HintPath>
@@ -52,24 +47,25 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\FortressCraft\64\FC_64_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\attributes\Experimental.cs" />
+    <Compile Include="src\attributes\ItemAction.cs" />
     <Compile Include="src\attributes\MachineActionButton.cs" />
     <Compile Include="src\attributes\SegmentEntity.cs" />
     <Compile Include="src\attributes\TerrainData.cs" />
+    <Compile Include="src\ItemFilters.cs" />
+    <Compile Include="src\machines\CoordNeighborhoods.cs" />
     <Compile Include="src\machines\ConveyorLikeMachine.cs" />
     <Compile Include="src\machines\InventoryMachine.cs" />
     <Compile Include="src\ModLoader.cs" />
-    <Compile Include="src\Neighborhood.cs" />
     <Compile Include="src\Extensions.cs" />
     <Compile Include="src\machines\ModMachineEntity.cs" />
-    <Compile Include="src\ports\FaceOutputPort.cs" />
-    <Compile Include="src\ports\FaceInputPort.cs" />
+    <Compile Include="src\ports\BasePorts.cs" />
+    <Compile Include="src\ports\Location.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

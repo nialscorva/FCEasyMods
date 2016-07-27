@@ -11,8 +11,9 @@ namespace nialsorva.FCEEasyMods
     public class FCESegmentEntity : System.Attribute
     {
         public string key;
+        public SpawnableObjectEnum objectType;
 
-        public FCESegmentEntity(string key)
+        public FCESegmentEntity(string key,SpawnableObjectEnum objectType)
         {
             this.key = key;
         }

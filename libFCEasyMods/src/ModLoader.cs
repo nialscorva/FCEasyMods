@@ -9,6 +9,17 @@ namespace nialsorva.FCEEasyMods
     using System.Reflection;
     using MachineKey = System.Tuple<int?, int?>;
 
+    struct MachineRegistration
+    {
+        public Type type;
+        public FCESegmentEntity attr;
+        public MachineRegistration(Type type, FCESegmentEntity attr)
+        {
+            this.type = type;
+            this.attr = attr;
+        }
+    }
+
     public class ModLoader
     {
         private const string LOGGER_PREFIX = "[nialscorva.FCEasyMods] ";
@@ -20,7 +31,7 @@ namespace nialsorva.FCEEasyMods
                 UnityEngine.Debug.Log(LOGGER_PREFIX + ": " + String.Format(msg, args));
             }
         }
-        Dictionary<MachineKey, System.Type> machineById = new Dictionary<MachineKey, Type>();
+        Dictionary<MachineKey, MachineRegistration> machineById = new Dictionary<MachineKey, MachineRegistration>();
         Dictionary<string, Func<ModItemActionParameters, ModItemActionResults>> itemActionByName = new Dictionary<string, Func<ModItemActionParameters, ModItemActionResults>>();
 
         public void registerMachine(ModRegistrationData mrd, Type type)
@@ -40,10 +51,10 @@ namespace nialsorva.FCEEasyMods
             TerrainDataValueEntry terrainDataValueEntry;
             TerrainData.GetCubeByKey(segEntity.key, out terrainDataEntry, out terrainDataValueEntry);
             int? cubeType = terrainDataEntry?.CubeType;
-            int? cubeValue = terrainDataValueEntry?.Value;
+            int cubeValue = terrainDataValueEntry?.Value ?? 0;
 
             // add it to our list so that we can create it later
-            machineById.Add(new MachineKey(cubeType, cubeValue), type);
+            machineById.Add(new MachineKey(cubeType, cubeValue), new MachineRegistration(type,segEntity));
 
             // Check the class to see if it has has global static fields to store the cube and value type in
             MemberInfo[] props = type.GetMembers(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
@@ -62,7 +73,7 @@ namespace nialsorva.FCEEasyMods
                 }
             }
             
-            log("Registered {0} to {1} with key={2}, value={3}", id, type.Name, cubeType, cubeValue);
+            log("Registered {0} to {1} with key={2}, value={3}", segEntity.key, type.Name, cubeType, cubeValue);
         }
 
        
@@ -120,16 +131,6 @@ namespace nialsorva.FCEEasyMods
             log("Successfully registered {0} machines", machineById.Count);
             return mrd;
         }
-
-        public void RegisterWindowHandler()
-        {
-            GenericMachineManager machineManager = (GenericMachineManager)typeof(GenericMachinePanelScript).GetField("manager", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(GenericMachinePanelScript.instance);
-
-            if (machineManager != null)
-            {
-                machineManager.AddWindowType(eSegmentEntity.DoodadFactory, new ModWindow());
-            }
-        }
         
         public  ModCreateSegmentEntityResults CreateSegmentEntity(ModCreateSegmentEntityParameters parameters)
         {
@@ -147,10 +148,25 @@ namespace nialsorva.FCEEasyMods
                 */
             ModCreateSegmentEntityResults res = new ModCreateSegmentEntityResults();
 
-            Type type = machineById[new MachineKey(parameters.Cube, parameters.Value)];
-            if (type != null)
+            MachineRegistration machineRegistration;
+            if(machineById.TryGetValue(new MachineKey(parameters.Cube, parameters.Value),out machineRegistration))
             {
-                res.Entity = (SegmentEntity)Activator.CreateInstance(type, new Object[] { parameters });
+                parameters.ObjectType = machineRegistration.attr.objectType;
+                res.Entity = (SegmentEntity)Activator.CreateInstance(machineRegistration.type, new Object[] { parameters });
+            }
+            else
+            {
+                log("Requested an unknown Segment Entity: " +
+                    "X = " + parameters.X + ", " +
+                    "Y = " + parameters.Y + ", " +
+                    "Z = " + parameters.Z + ", " +
+                    "Cube = " + parameters.Cube + ", " +
+                    "Value = " + parameters.Value + ", " +
+                    "Segment = " + parameters.Segment + ", " +
+                    "Type = " + parameters.Type + ", " +
+                    "Flags = " + parameters.Flags + ", " +
+                    "toString = \"" + parameters.ToString() + "\""
+                );
             }
 
             return res;
