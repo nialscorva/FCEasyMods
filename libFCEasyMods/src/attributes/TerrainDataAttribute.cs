@@ -10,7 +10,7 @@ namespace nialsorva.FCEEasyMods
     /// </summary>
     ///
     [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.Struct)]
-    public class FCETerrainData : System.Attribute
+    public class FCETerrainDataAttribute : System.Attribute
     {
         public string Name;
         public string IconName;

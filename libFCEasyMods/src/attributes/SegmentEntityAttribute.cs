@@ -1,21 +1,22 @@
 ﻿
 using System;
 
-namespace nialsorva.FCEEasyMods
+namespace nialscorva.FCEEasyMods
 {
     /// <summary>
     /// Marks the class as a SegmentEntity that should be registered when the mod loads.
     /// </summary>
     ///
     [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.Struct)]
-    public class FCESegmentEntity : System.Attribute
+    public class FCESegmentEntityAttribute : System.Attribute
     {
         public string key;
         public SpawnableObjectEnum objectType;
 
-        public FCESegmentEntity(string key,SpawnableObjectEnum objectType)
+        public FCESegmentEntityAttribute(string key,SpawnableObjectEnum objectType)
         {
             this.key = key;
+            this.objectType = objectType;
         }
     }
 

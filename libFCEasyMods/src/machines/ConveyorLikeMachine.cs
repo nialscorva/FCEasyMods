@@ -6,7 +6,7 @@ using UnityEngine;
 
 // StorageMachineInterface, StorageInventoryIterationInterface
 
-namespace nialsorva.FCEEasyMods
+namespace nialscorva.FCEEasyMods
 {
     using StateCoroutine = IEnumerator<ModMachineEntity.StateReturn>;
     using Coroutine = IEnumerator<int>;

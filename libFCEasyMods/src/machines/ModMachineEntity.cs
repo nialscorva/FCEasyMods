@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using UnityEngine;
 
-namespace nialsorva.FCEEasyMods
+namespace nialscorva.FCEEasyMods
 {
     using StateCoroutine = IEnumerator<ModMachineEntity.StateReturn>;
     using Coroutine = IEnumerator<int>;
@@ -37,18 +34,6 @@ namespace nialsorva.FCEEasyMods
     }
     public class ModMachineEntity : MachineEntity
     {
-        //=======================================================
-        // Key constants
-        //=======================================================
-        public const string BUTTON_EXTRACT = "Extract";  // Typically 'Q'
-        public const string BUTTON_INTERACT = "Interact";  // Typically 'E'
-        public const string BUTTON_STORE = "Store";  // Typically 'T'
-
-        public const int MOD_NONE = 0;
-        public const int MOD_SHIFT = 1;
-        public const int MOD_CTRL = 2;
-        public const int MOD_ALT = 4;
-
         //=======================================================
         // Logging helpers
         //=======================================================
@@ -131,12 +116,6 @@ namespace nialsorva.FCEEasyMods
         List<CoroutineEntry> animationCoroutines = new List<CoroutineEntry>();
 
         //=======================================================
-        // Button Actions
-        //=======================================================
-        List<Tuple<string, int, Action>> buttonActions = new List<Tuple<string, int, Action>>();
-
-
-        //=======================================================
         // Rotation Actions
         //=======================================================
         public delegate void RotationEventHandler(ModMachineEntity sender, Quaternion rotation);
@@ -145,8 +124,6 @@ namespace nialsorva.FCEEasyMods
         public delegate void HoverEventHandler(ModMachineEntity sender);
         public event HoverEventHandler HoverEvent;
         
-        public CubeCoord WorldPosition { get; }
-
         //=======================================================
         // Constructors
         //=======================================================
@@ -154,8 +131,7 @@ namespace nialsorva.FCEEasyMods
             mbNeedsLowFrequencyUpdate = true;
             mbNeedsUnityUpdate = true;
 
-            WorldPosition = new CubeCoord(mnX - 4611686017890516992L, mnY - 4611686017890516992L, mnZ - 4611686017890516992L);
-            LOGGER_PREFIX = "[" + this.GetType().Name + WorldPosition + "]";
+            LOGGER_PREFIX = "[" + this.GetType().FullName + this.ToNormalizedCoordinates() + "]";
 
             StartLowFrequencyCoroutine(UpdateRotationOnce());
         }
@@ -214,8 +190,11 @@ namespace nialsorva.FCEEasyMods
             long now = stopwatch.ElapsedMilliseconds;
             if (primaryGO == null)
             {
-                primaryGO = this.mWrapper.mGameObjectList[0];
-                InitializeGameObjects();
+                primaryGO = this.mWrapper?.mGameObjectList?[0];
+                if (primaryGO != null)
+                {
+                    InitializeGameObjects();
+                }
             }
             else
             {
@@ -304,35 +283,6 @@ namespace nialsorva.FCEEasyMods
 
             }
         }
-        //=======================================================
-        // Button Handling
-        //=======================================================
-        public void AddButtonAction(string button, Action action) { AddButtonAction(button, MOD_NONE, action); }
-        public void AddButtonAction(string button, int modMask, Action action)
-        {
-            buttonActions.Add(Tuple.Create(button, modMask, action));
-        }
-
-
-        protected void CheckButtons()
-        {
-            var actions = buttonActions.Where(a => Input.GetButtonDown(a.Item1));
-            if (actions.Count() == 0)
-                return;
-
-            int keymask = 0;
-            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-                keymask |= MOD_SHIFT;
-            if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
-                keymask |= MOD_ALT;
-            if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
-                keymask |= MOD_CTRL;
-
-            foreach (var v in actions.Where(a => a.Item2 == keymask))
-            {
-                v.Item3();
-            }
-        }
 
         private string DebugText ="";
         protected virtual string PopupText {  get
@@ -390,6 +340,15 @@ namespace nialsorva.FCEEasyMods
             }
             return msg;
         }
+        protected void RotateMesh(Mesh m, Quaternion rot)
+        {
+            Vector3[] newVertices = new Vector3[m.vertices.Length];
 
+            for (int i = 0; i < m.vertices.Length; ++i)
+            {
+                newVertices[i] = rot * m.vertices[i];
+            }
+            m.vertices = newVertices;
+        }
     }
 }

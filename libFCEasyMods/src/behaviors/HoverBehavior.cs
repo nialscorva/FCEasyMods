@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace nialsorva.FCEEasyMods.Behaviors
+namespace nialscorva.FCEEasyMods.Behaviors
 {
     public class HoverBehavior
     {
         protected long viewUntil = ModMachineEntity.Now;
-        protected long lingerTimeInMS = 1000;
+        protected long lingerTimeInMS = 10;
 
-        public HoverBehavior(ModMachineEntity e)
+        public HoverBehavior(ModMachineEntity e) : this(e, 100) { }
+        public HoverBehavior(ModMachineEntity e,long lingerTimeInMS)
         {
             e.HoverEvent += SetActive;
+            this.lingerTimeInMS = lingerTimeInMS;
         }
 
         public void SetActive(ModMachineEntity sender)
@@ -23,7 +25,6 @@ namespace nialsorva.FCEEasyMods.Behaviors
         {
             return ModMachineEntity.Now <= viewUntil;
         }
-    }
 
-}
+    }
 }

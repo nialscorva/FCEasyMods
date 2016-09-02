@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace nialsorva.FCEEasyMods
+namespace nialscorva.FCEEasyMods
 {
     public static class CoordNeighborhood
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace nialsorva.FCEEasyMods
+namespace nialscorva.FCEEasyMods
 {
     public interface ItemFilter
     {
@@ -52,7 +52,10 @@ namespace nialsorva.FCEEasyMods
         {
             return i.mnItemID >= 4000 && i.mnItemID <= 4101;
         }
-
+        public static bool IsMachineBlock(ItemBase i)
+        {
+            return i is ItemCubeStack && (CubeHelper.IsMultiBlockMachine((i as ItemCubeStack).mCubeType) || CubeHelper.IsMachine((i as ItemCubeStack).mCubeType));
+        }
         public static bool IsSmeltable(ItemBase i)
         {
             return i is ItemCubeStack && CubeHelper.IsIngottableOre((i as ItemCubeStack).mCubeType);
@@ -74,6 +77,8 @@ namespace nialsorva.FCEEasyMods
                 return false;
             }
         }
+        public static ItemFilter ALL = new ItemDelegateFilter("All", (i) => true);
+        public static ItemFilter NONE = new ItemDelegateFilter("Nothing", (i) => false);
     }
 
     public class ItemDelegateFilter : ItemFilter
@@ -125,7 +130,7 @@ namespace nialsorva.FCEEasyMods
         }
         public int Normalize(int i)
         {
-            return (i + Filters.Length) % Filters.Length;
+            return (i % Filters.Length + Filters.Length) % Filters.Length;
         }
         public void Next()
         {
@@ -157,8 +162,9 @@ namespace nialsorva.FCEEasyMods
     public class ConveyorItemFilterSet : ItemFilterSet
     {
         public ConveyorItemFilterSet() : this(0) { }
-        public ConveyorItemFilterSet(int index)
-            : base(index,new ItemDelegateFilter("All", (i) => true),
+
+        public static ItemFilter[] HOPPER_REQUEST_TYPE = new ItemFilter[] {
+            ItemFilters.ALL,
             new ItemDelegateFilter("Combustible", ItemFilters.IsHighCalorie),
             new ItemDelegateFilter("Garbage", ItemFilters.IsGarbage),
             new ItemDelegateFilter("Ore", ItemFilters.IsOre),
@@ -166,11 +172,14 @@ namespace nialsorva.FCEEasyMods
             new ItemDelegateFilter("Crafted Items", ItemFilters.IsCrafted),
             new ItemDelegateFilter("Crystals", ItemFilters.IsCrafted),
             new ItemDelegateFilter("Biomass", ItemFilters.IsBiomass),
-            new ItemDelegateFilter("Nothing", (i) => false),
+            ItemFilters.NONE,
             new ItemDelegateFilter("Crystals", ItemFilters.IsGems),
             new ItemDelegateFilter("Organic Items", ItemFilters.IsOrganic),
             new ItemDelegateFilter("Smeltable", ItemFilters.IsSmeltable),
-            new ItemDelegateFilter("Researchable", ItemFilters.IsResearchable))
+            new ItemDelegateFilter("Researchable", ItemFilters.IsResearchable)
+        };
+        public ConveyorItemFilterSet(int index)
+            : base(index,HOPPER_REQUEST_TYPE)
         {
         
         }

@@ -7,7 +7,7 @@
     <ProjectGuid>{F7D70322-362C-4B7B-BA96-4D68FDD93308}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>nialsorva.FCEEasyMods</RootNamespace>
+    <RootNamespace>nialscorva.FCEEasyMods</RootNamespace>
     <AssemblyName>FCEasyMods</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -52,15 +52,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\AnimationCoroutines.cs" />
+    <Compile Include="src\GameObjectDumper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\attributes\ItemAction.cs" />
-    <Compile Include="src\attributes\MachineActionButton.cs" />
-    <Compile Include="src\attributes\SegmentEntity.cs" />
-    <Compile Include="src\attributes\TerrainData.cs" />
+    <Compile Include="src\attributes\ItemActionAttribute.cs" />
+    <Compile Include="src\attributes\MultiblockMachineAttribute.cs" />
+    <Compile Include="src\attributes\SegmentEntityAttribute.cs" />
+    <Compile Include="src\attributes\TerrainDataAttribute.cs" />
+    <Compile Include="src\behaviors\HotKeyBehavior.cs" />
+    <Compile Include="src\behaviors\MassStorageInventoryBehavior.cs" />
+    <Compile Include="src\BoxMachineBoundsChecker.cs" />
     <Compile Include="src\ItemFilters.cs" />
+    <Compile Include="src\behaviors\HoverBehavior.cs" />
     <Compile Include="src\machines\CoordNeighborhoods.cs" />
     <Compile Include="src\machines\ConveyorLikeMachine.cs" />
-    <Compile Include="src\machines\InventoryMachine.cs" />
+    <Compile Include="src\machines\StorageHopperMachine.cs" />
+    <Compile Include="src\machines\DisplayPanelMachine.cs" />
     <Compile Include="src\ModLoader.cs" />
     <Compile Include="src\Extensions.cs" />
     <Compile Include="src\machines\ModMachineEntity.cs" />

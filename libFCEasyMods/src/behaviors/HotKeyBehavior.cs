@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace nialsorva.FCEEasyMods.Behaviors
+namespace nialscorva.FCEEasyMods.Behaviors
 {
     public class HotKeyBehavior
     {
@@ -33,6 +33,7 @@ namespace nialsorva.FCEEasyMods.Behaviors
         public void AddButtonAction(string button, Action action) { AddButtonAction(button, MOD_NONE, action); }
         public void AddButtonAction(string button, int modMask, Action action)
         {
+            ModLoader.log("Added button action for {0} with mods {1}", button, modMask);
             buttonActions.Add(Tuple.Create(button, modMask, action));
         }
 
@@ -53,10 +54,11 @@ namespace nialsorva.FCEEasyMods.Behaviors
 
             foreach (var v in actions.Where(a => a.Item2 == keymask))
             {
+                ModLoader.log("Invoking button action for {0} with mods {1}", v.Item1, v.Item2);
                 v.Item3();
             }
         }
     }
 
 }
-}
+
